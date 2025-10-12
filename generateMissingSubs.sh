@@ -8,7 +8,7 @@ readSub() {
 
 time2ms() {
   # date '+%s%N' --date="1970-01-01 $1" | sed 's/000000$//'
-  gdate -u -d "01/01/1970 $1" +"%s" 
+  $DATE_CMD -u -d "01/01/1970 $1" +"%s" 
 
 }
 
@@ -25,7 +25,7 @@ ms2time() {
   SECS=`expr $1 / 1000`
   MS=`expr $1 % 1000`
 
-  TIME=`gdate +%T -u -d @$1 `
+  TIME=`$DATE_CMD +%T -u -d @$1 `
   echo "$TIME"
 }
 
@@ -48,7 +48,7 @@ else
 fi
 
 
-if [ "$#" != "3" ]
+if [ "$#" -lt "3" ]
 then
   echo "Error. Usage: $0 <input-srt-file> <lang-code> <model size>" 1>&2
   exit 1
@@ -197,8 +197,8 @@ cat $i | (
 
     NEWFILE=`echo $PARAMS | awk '{print $3}'`
 
-    echo "Executing: $NEWFILE $2 $3"
-    vid2sub.sh $NEWFILE $2 $3
+    echo "Executing: $NEWFILE ${@:2}"
+    vid2sub.sh $NEWFILE "${@:2}"
   done
 )
 

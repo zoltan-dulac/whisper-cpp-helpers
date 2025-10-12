@@ -52,7 +52,6 @@ fi
 
 LESS_HALLUCINATIONS=`getFlagValue less-hallucinations`
 echo $LESS_HALLUCINATIONS
-exit
 
 
 
@@ -65,9 +64,11 @@ then
 		echo
 		echo "Here are the following valid flags:"
 		echo
-		echo "  --model-root: Set to directory that contains your whisper.cpp models"
-		echo "--no-translate: Do not translate non-English captions."
-		echo "     --verbose: For more verbose output."
+		echo "               --help: This message"
+		echo "         --model-root: Set to directory that contains your whisper.cpp models"
+		echo "       --no-translate: Do not translate non-English captions."
+		echo "            --verbose: For more verbose output."
+		echo "--less-hallunications: Use flags that theoretically produce less hallunications (beta)"
 		echo  
 	) 1>&2
 	exit 0
