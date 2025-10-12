@@ -50,6 +50,10 @@ then
 	MODEL_ROOT="$HOME/models/"
 fi
 
+LESS_HALLUCINATIONS=`getFlagValue less-hallucinations`
+echo $LESS_HALLUCINATIONS
+exit
+
 
 
 NO_EXT="${1%.*}"
@@ -154,7 +158,8 @@ if [ "$WAV_FILE" != "$FILE" ]
 then
 	#.. First, extract 16000 Hz file from video
 	echo "Extracting 16000 Hz wav from video ..."
-	$FFMPEG -i $FILE -acodec pcm_s16le -ar 16000 $WAV_FILE
+	$FFMPEG -i $FILE -ar 16000 -ac 1 -c:a pcm_s16le $WAV_FILE
+	# $FFMPEG -i $FILE -acodec pcm_s16le -ar 16000 $WAV_FILE
 	echo "Done."
 fi 
 
@@ -173,7 +178,19 @@ then
 	# $WHISPER $TR --model $MODEL --max-len 40 --output-srt $WAV_FILE  
 	# $WHISPER $TR --model $MODEL --split-on-word --max-len 80 --output-vtt $WAV_FILE  
 	echo "Starting Whisper.cpp ..."
-	whisper-cli $TR --model $MODEL --split-on-word  --output-srt  $WAV_FILE --no-prints  --print-colors  --max-len 200
+	echo "Confidence formating: highlighted (low confidence), underlined (medium), dim (high confidence)"
+	echo "Model: $MODEL"
+
+	
+	if [ "$LESS_HALLUNICATIONS" != "null" ]
+	then
+		CMD="whisper-cli $TR --model $MODEL --split-on-word  --output-srt  $WAV_FILE --no-prints  --print-confidence --max-len 200 -mc 0	--beam-size 5 --temperature 0"
+	else
+		CMD="whisper-cli $TR --model $MODEL --split-on-word  --output-srt  $WAV_FILE --no-prints  --print-confidence --max-len 200 	"
+	fi
+
+	echo "Running: $CMD"
+	$CMD
 	echo "ERROR NUM: $?"
 	# .. move the generated file to the right filename
 	mv $WAV_FILE.srt $SUB_FILE
