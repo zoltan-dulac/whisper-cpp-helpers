@@ -114,7 +114,6 @@ OLD_SUB="$NO_EXT--beforeInsert.srt"
 WAV="$NO_EXT.wav"
 MP4="$NO_EXT.mp4"
 
-
 ls $MP4 2>&1 > /dev/null
 
 
@@ -135,6 +134,8 @@ READ_NEXT_SUB="1"
 # Copy original srt file to TMP_SUB
 cp $1 $TMP_SUB 
 
+
+echo "X $i"
 cat $i | (
   MISSINGSUBS=()
   while [ "$SUB" != "" ]

@@ -182,8 +182,7 @@ then
 	echo "Confidence formating: highlighted (low confidence), underlined (medium), dim (high confidence)"
 	echo "Model: $MODEL"
 
-	
-	if [ "$LESS_HALLUNICATIONS" != "null" ]
+	if [ "$LESS_HALLUNICATIONS" != "" ]
 	then
 		CMD="whisper-cli $TR --model $MODEL --split-on-word  --output-srt  $WAV_FILE --no-prints  --print-confidence --max-len 200 -mc 0	--beam-size 5 --temperature 0"
 	else
