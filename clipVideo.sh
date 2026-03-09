@@ -17,9 +17,11 @@ fi
 if [ "$2" = "0:0:0" ]
 then
 	echo "clip from beginning"
-	ffmpeg  -v quiet -i $1  -t $3 -async 1 -c copy $4
+	echo "Running: ffmpeg   -i $1  -t $3 -async 1 -c copy $4"
+	ffmpeg   -i $1  -t $3 -async 1 -c copy $4
 else
-	ffmpeg  -v quiet -i $1 -ss $2 -t $3 -async 1 -c copy $4
+	echo "Running: ffmpeg   -i $1 -ss $2 -t $3 -async 1 -c copy $4"
+	ffmpeg   -i $1 -ss $2 -t $3 -async 1 -c copy $4
 fi
 
 
