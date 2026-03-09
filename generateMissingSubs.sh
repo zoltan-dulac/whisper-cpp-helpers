@@ -119,7 +119,7 @@ ls $MP4 2>&1 > /dev/null
 
 if [ "$?" -ne "0" ]
 then
-  MP4="$NO_EXT.mp4"
+  MP4="$NO_EXT.mkv"
 fi
 
 if [ ! -f "$WAV" ]
