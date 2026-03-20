@@ -3,7 +3,7 @@ set -euo pipefail
 IFS=$'\n\t'
 
 declare -a TR_ARR=()
-declare -a TRDZ_ARR=()
+declare -a TDRZ_ARR=()
 declare -a CMD=()
 declare -a FFMPEG=()
 
@@ -80,7 +80,7 @@ then
 		echo "                         https://gist.github.com/S22F5/0cb26e9bf635448ffe20041a3fb759a6"
 		echo "--less-hallucinations: Use flags that theoretically produce less hallunications (beta)"
 		echo "     --whisper-params: Parameters we should pass to whisper"
-		echo "               --trdz: Use tiny-diarize to denote when people speak."
+		echo "               --tdrz: Use tiny-diarize to denote when people speak."
 		echo  
 	) 1>&2
 	exit 0
@@ -95,11 +95,11 @@ fi
 
 LESS_HALLUCINATIONS=`getFlagValue less-hallucinations`
 
-# TRDZ as array
-if [[ "$(getFlagValue trdz)" == "true" ]]; then
-  TRDZ_ARR=(-tdrz)
+# TDRZ as array
+if [[ "$(getFlagValue tdrz)" == "true" ]]; then
+  TDRZ_ARR=(-tdrz)
 else
-  TRDZ_ARR=()
+  TDRZ_ARR=()
 fi
 
 WHISPER_PARAMS=`getFlagValue whisper-params`
@@ -239,10 +239,10 @@ then
 	CMD=(whisper-cli)
 	CMD+=("${TR_ARR[@]}")
 
-	# Only append TRDZ args if present
-	if (( ${#TRDZ_ARR[@]} ))
+	# Only append TDRZ args if present
+	if (( ${#TDRZ_ARR[@]} ))
 	then
-		CMD+=("${TRDZ_ARR[@]}")
+		CMD+=("${TDRZ_ARR[@]}")
 	fi
 
 	CMD+=(--model "$MODEL"
